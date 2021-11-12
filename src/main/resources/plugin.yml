@@ -1,0 +1,27 @@
+name: GlobalEvents
+main: me.pray.globalevents.GlobalEvents
+version: 1.0
+api-version: 1.16
+depend: [ShopGUIPlus]
+commands:
+  startevents:
+    description: Start the global (re-occuring) events
+  stopevents:
+    description: Stop the global (re-occuring) events
+  globaleventsreload:
+    description: Re-loads the configuration file
+    aliases: [gereload, ger]
+  doubleoretest:
+    description: Strictly for testing! (Will break plugin)
+  angeleventtest:
+    description: Strictly for testing! (Will break plugin)
+  multipliertest:
+    description: Strictly for testing! (Will break plugin)
+  doublemobdroptest:
+    description: Strictly for testing! (Will break plugin)
+  doublexptest:
+    description: Strictly for testing! (Will break plugin)
+  acidicwatertest:
+    description: Strictly for testing! (Will break plugin)
+  doublemobdamage:
+    description: Strictly for testing! (Will break plugin)

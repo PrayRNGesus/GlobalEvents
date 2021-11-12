@@ -1,0 +1,40 @@
+#Replace %newline% to make a new line in chat
+#For multi-line new lines, you must add a space in-between %newline% (Because of how spigot works)
+#Example: Hi%newline% %newline% there
+
+
+#For chat colors use '&' like every other plugin
+
+server-startup:
+  first-event-broadcast-enabled: true
+  first-event-broadcast: '&cAn event will start in 20 minutes!'
+  #Tick based, every 20 ticks = 1 seconds, so 100 ticks would be 5 seconds
+  first-event-delay: 24000
+  event-delay: 72000
+
+server-event-broadcasts:
+  double-ores:
+    start-msg: '&7Dammit, why has nobody caught this pesky wizard yet? Look what he has done!%newline% &fMining any ore will now give you double the rewards. Wizard… come on man. %newline% %newline%&7This event will last for &7&n20 Minutes.'
+    end-msg: '&7Double Ores has &cended!'
+  double-xp:
+    start-msg: '&7Alright, who let the wizard out of his tower?%newline%&fYou will now receive twice the experience from mob kills.%newline% %newline%&7This event will last for &7&n20 Minutes.'
+    end-msg: '&7Double XP has &cended!'
+  double-mob-drops:
+    start-msg: '&7Recently, you have developed a hatred towards mobs!%newline%&fAll mobs will now drop twice their loot. Perfect time to strike. %newline% %newline%&7This event will last for &7&n20 Minutes.'
+    end-msg: '&7Double Mob Drops has &cended!'
+  global-multiplier:
+    start-msg: '&7The local mage feels generous. Here, take this magical potion.%newline%&fEverything in the shop will now sell for $0.15 more. %newline% %newline%&7This event will last for &7&n20 Minutes.'
+    end-msg: '&7Global Multiplier has &cended!'
+    amount: 2.0
+  angle-event:
+    start-msg: '&7Alright, who let the Alchemist finish his training early?%newline%&fYou now have Haste II & Speed II. He needs more training. %newline% %newline%&7This event will last for &7&n20 Minutes.'
+    end-msg: '&7Angel Event has &cended!'
+  acidic-water:
+    warning-msg: '&c&lWARNING: &fIf you are currently in rain or in a water source, you have &c&l&n3 SECONDS&r &fto get out, or you will start losing health!'
+    start-msg: '&b&lACIDIC WATER%newline% %newline%&7The evil witch has escaped her cage! Who let this happen?%newline%&fRain & Water sources will now deal half a heart if not avoided.%newline% %newline%&7This event will last for &7&n10 Minutes.'
+    end-msg: '&7AAcidic Water has &cended!'
+    #A player has a total of 20 health so 2 damage would be equal to 1 heart
+    damage-amount: 1.0
+  double-mob-damage:
+    start-msg: '&2&lDOUBLE MOB-DAMAGE %newline% %newline%&7The powerful warlock has escaped. Quick, find him!%newline%&fAll mobs will now deal double the damage than usual!%newline% %newline%&7This event will last for &7&n10 Minutes.'
+    end-msg: '&7Double mob-damage has &cended!'
