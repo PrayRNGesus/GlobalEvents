@@ -16,4 +16,4 @@ Permissions:
   globalevents.start - start automatic global events
   globalevents.end - stop automatic global events and end any on-going events
   [ANY TEST COMMANDS REQUIRE OP]
-
+ 
