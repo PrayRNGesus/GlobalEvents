@@ -5,20 +5,23 @@ import me.pray.globalevents.customevents.Events;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
-public class DoubleMobDrops extends Events {
+public class DoubleMobDrops implements Listener {
 
-    public DoubleMobDrops(GlobalEvents plugin) {
-        super(plugin);
+    Events events;
+
+    public DoubleMobDrops(Events events) {
+        this.events = events;
     }
 
     @EventHandler
     public void doubleMobDropEvent(EntityDeathEvent event) {
-        if (!plugin.getDoubleMobDrops()) return;
+        if (!events.getDoubleMobDrops()) return;
         if (event.getEntity() instanceof Player) return;
         if (!(event.getEntity().getKiller() instanceof Player)) return;
         List<ItemStack> drops = event.getDrops();

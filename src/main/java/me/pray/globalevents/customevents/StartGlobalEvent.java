@@ -3,14 +3,10 @@ package me.pray.globalevents.customevents;
 import me.pray.globalevents.GlobalEvents;
 import org.bukkit.Bukkit;
 
-public class StartGlobalEvent {
-    //main class instance
-    private GlobalEvents plugin;
-    Events e;
+public class StartGlobalEvent extends Events {
 
     public StartGlobalEvent(GlobalEvents plugin) {
-        this.plugin = plugin;
-        e = new Events(plugin);
+        super(plugin);
     }
 
     public void startGlobalEvents() {
@@ -26,59 +22,49 @@ public class StartGlobalEvent {
             plugin.getServer().broadcastMessage(plugin.format(announcementMsg));
         }
 
-            plugin.addToTaskId(Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
-                @Override
-                public void run() {
-                    int random = (int) (Math.random()*2);
-                    switch (random) {
-                        case 0:
-                            String goodEventType = getGoodEvent();
-                            switch (goodEventType.toLowerCase()) {
-                                case "double ores":
-                                    e.startDoubleOres(24000L);
-                                    break;
-                                case "double xp":
-                                    e.startDoubleXp(24000L);
-                                    break;
-                                case "double mobdrops":
-                                    e.startDoubleMobDrops(24000L);
-                                    break;
-                                case "global sell-multiplier":
-                                    e.startGlobalMultiplier(24000L);
-                                    break;
-                                case "angel event":
-                                    e.startAngelEvent(24000L);
-                                    break;
-                                default:
-                                    break;
-                            }
-                            break;
-                        case 1:
-                            String badEventType = getBadEvent();
-                            switch (badEventType.toLowerCase()) {
-                                case "acidic water":
-                                    e.startAcidicWater(12000L);
-                                    break;
-                                case "double mob damage":
-                                    e.startDoubleMobDamage(12000L);
-                                    break;
-                                default:
-                                    break;
-                            }
-                    }
+        plugin.setMainTask(Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
+            final long goodEventDuration = plugin.getConfig().getLong("server-startup.good-event-duration");
+
+            @Override
+            public void run() {
+                checkCurrentEvent();
+                String goodEventType = getGoodEvent();
+                switch (goodEventType.toLowerCase()) {
+                    case "double ores":
+                        startDoubleOres(goodEventDuration);
+                        setCurrentGoodEvent(getCurrentGoodEvent() + 1);
+                        break;
+                    case "double xp":
+                        startDoubleXp(goodEventDuration);
+                        setCurrentGoodEvent(getCurrentGoodEvent() + 1);
+                        break;
+                    case "double mobdrops":
+                        startDoubleMobDrops(goodEventDuration);
+                        setCurrentGoodEvent(getCurrentGoodEvent() + 1);
+                        break;
+                    case "insta kill":
+                        startInstaKill(goodEventDuration);
+                        setCurrentGoodEvent(getCurrentGoodEvent() + 1);
+                        break;
+                    case "angel event":
+                        startAngelEvent(goodEventDuration);
+                        setCurrentGoodEvent(0);
+                        break;
+                    default:
+                        break;
                 }
-            }, initialDelay, eventDelay));
+            }
+        }, initialDelay, eventDelay));
     }
 
-    public String getGoodEvent() {
-        int index = (int) (Math.random() * plugin.goodEvents.size());
-        return plugin.goodEvents.get(index);
-    }
+    private void checkCurrentEvent() {
+        if (plugin.getRunningType() != null) {
+            if (plugin.getConfig().getBoolean("server-startup.broadcast-event-running")) {
+                Bukkit.broadcastMessage(plugin.format("&cNext event did not start as an event is already running!"));
+            }
 
-    public String getBadEvent() {
-        int index = (int) (Math.random() * plugin.badEvents.size());
-        return plugin.badEvents.get(index);
+            return;
+        }
     }
-
 
 }

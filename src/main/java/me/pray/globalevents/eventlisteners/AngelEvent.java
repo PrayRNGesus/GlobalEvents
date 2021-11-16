@@ -6,24 +6,27 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-public class AngelEvent extends Events {
+public class AngelEvent implements Listener {
 
-    public AngelEvent(GlobalEvents plugin) {
-        super(plugin);
+    Events events;
+
+    public AngelEvent(Events events) {
+        this.events = events;
     }
 
     @EventHandler
     public void onSpawn(PlayerRespawnEvent event) {
-        if (!plugin.getAngelEvent()) return;
+        if (!events.getAngelEvent()) return;
         Player player = event.getPlayer();
 
-        Bukkit.getScheduler().runTaskLater(plugin, () -> {
+        Bukkit.getScheduler().runTaskLater(events.plugin, () -> {
             player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1));
             player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, Integer.MAX_VALUE, 1));
         }, 5L);
@@ -31,7 +34,7 @@ public class AngelEvent extends Events {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
-        if (!plugin.getAngelEvent()) return;
+        if (!events.getAngelEvent()) return;
         Player player = event.getPlayer();
         player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1));
         player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, Integer.MAX_VALUE, 1));
@@ -39,7 +42,7 @@ public class AngelEvent extends Events {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onQuit(PlayerQuitEvent event) {
-        if (!plugin.getAngelEvent()) return;
+        if (!events.getAngelEvent()) return;
         Player player = event.getPlayer();
 
         if (player.hasPotionEffect(PotionEffectType.SPEED)) {

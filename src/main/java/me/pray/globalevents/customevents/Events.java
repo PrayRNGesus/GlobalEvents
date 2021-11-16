@@ -2,12 +2,25 @@ package me.pray.globalevents.customevents;
 
 import me.pray.globalevents.GlobalEvents;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+
+import java.util.List;
+
 public class Events implements Listener {
+
+    public int currentGoodEvent = 0;
+    public boolean doubleOres = false;
+    public boolean doubleXp = false;
+    public boolean doubleMobDrops = false;
+    public boolean angelEvent = false;
+    public boolean instaKill = false;
+
+    public String[] goodEvents = {"Double Ores", "Double XP", "Double Mobdrops", "Insta Kill", "Angel Event"};
 
     public final GlobalEvents plugin;
 
@@ -16,74 +29,99 @@ public class Events implements Listener {
     }
 
     public void startDoubleOres(Long durationInTicks) {
-        plugin.setDoubleOres(true);
+        setDoubleOres(true);
+        plugin.setRunningType("DoubleOres");
 
-        String doubleOresMsg = plugin.getConfig().getString("server-event-broadcasts.double-ores.start-msg");
+        List<String> doubleOresMsg = plugin.getConfig().getStringList("server-event-broadcasts.double-ores.start-msg");
         plugin.getServer().broadcastMessage(plugin.format(doubleOresMsg));
 
         plugin.addToTaskId(Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override
             public void run() {
-                String endMessage = plugin.getConfig().getString("server-event-broadcasts.double-ores.end-msg");
-                plugin.setDoubleOres(false);
-                plugin.getServer().broadcastMessage(plugin.format(endMessage));
+                endDoubleOres();
             }
         }, durationInTicks));
+    }
+
+    public void endDoubleOres() {
+        List<String> endMessage = plugin.getConfig().getStringList("server-event-broadcasts.double-ores.end-msg");
+        setDoubleOres(false);
+        plugin.getServer().broadcastMessage(plugin.format(endMessage));
+        plugin.setRunningType(null);
     }
 
     public void startDoubleXp(Long durationInTicks) {
-        plugin.setDoubleXp(true);
+        setDoubleXp(true);
+        plugin.setRunningType("DoubleXP");
 
-        String doubleXpMsg = plugin.getConfig().getString("server-event-broadcasts.double-xp.start-msg");
+        List<String> doubleXpMsg = plugin.getConfig().getStringList("server-event-broadcasts.double-xp.start-msg");
         plugin.getServer().broadcastMessage(plugin.format(doubleXpMsg));
 
         plugin.addToTaskId(Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override
             public void run() {
-                String endMessage = plugin.getConfig().getString("server-event-broadcasts.double-xp.end-msg");
-                plugin.setDoubleXp(false);
-                plugin.getServer().broadcastMessage(plugin.format(endMessage));
+                endDoubleXp();
             }
         }, durationInTicks));
+    }
+
+    public void endDoubleXp() {
+        List<String> endMessage = plugin.getConfig().getStringList("server-event-broadcasts.double-xp.end-msg");
+        setDoubleXp(false);
+        plugin.getServer().broadcastMessage(plugin.format(endMessage));
+        plugin.setRunningType(null);
     }
 
     public void startDoubleMobDrops(Long durationInTicks) {
-        plugin.setDoubleMobDrops(true);
+        setDoubleMobDrops(true);
+        plugin.setRunningType("DoubleMobDrops");
 
-        String doubleXpMsg = plugin.getConfig().getString("server-event-broadcasts.double-mob-drops.start-msg");
+        List<String> doubleXpMsg = plugin.getConfig().getStringList("server-event-broadcasts.double-mob-drops.start-msg");
         plugin.getServer().broadcastMessage(plugin.format(doubleXpMsg));
 
         plugin.addToTaskId(Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override
             public void run() {
-                String endMessage = plugin.getConfig().getString("server-event-broadcasts.double-mob-drops.end-msg");
-                plugin.setDoubleMobDrops(false);
-                plugin.getServer().broadcastMessage(plugin.format(endMessage));
+                endDoubleMobDrops();
             }
         }, durationInTicks));
     }
 
-    public void startGlobalMultiplier(Long durationInTicks) {
-        plugin.setGlobalMultiplierBool(true);
+    public void endDoubleMobDrops() {
+        List<String> endMessage = plugin.getConfig().getStringList("server-event-broadcasts.double-mob-drops.end-msg");
+        setDoubleMobDrops(false);
+        plugin.getServer().broadcastMessage(plugin.format(endMessage));
+        plugin.setRunningType(null);
+    }
 
-        String multiplierMsg = plugin.getConfig().getString("server-event-broadcasts.global-multiplier.start-msg");
-        plugin.getServer().broadcastMessage(plugin.format(multiplierMsg));
+    public void startInstaKill(Long durationInTicks) {
+        setInstaKill(true);
+        plugin.setRunningType("InstaKill");
+
+        List<String> startMsg = plugin.getConfig().getStringList("server-event-broadcasts.insta-kill.start-msg");
+        plugin.getServer().broadcastMessage(plugin.format(startMsg));
 
         plugin.addToTaskId(Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override
             public void run() {
-                String endMessage = plugin.getConfig().getString("server-event-broadcasts.global-multiplier.end-msg");
-                plugin.setGlobalMultiplierBool(false);
-                plugin.getServer().broadcastMessage(plugin.format(endMessage));
+                endInstaKill();
             }
         }, durationInTicks));
     }
 
+    public void endInstaKill() {
+        List<String> endMessage = plugin.getConfig().getStringList("server-event-broadcasts.insta-kill.end-msg");
+        setInstaKill(false);
+        plugin.getServer().broadcastMessage(plugin.format(endMessage));
+        plugin.setRunningType(null);
+    }
+
     public void startAngelEvent(Long durationInTicks) {
-        plugin.setAngelEvent(true);
+        setAngelEvent(true);
+        plugin.setRunningType("AngelEvent");
 
         //had to do direct
-        plugin.getServer().broadcastMessage(plugin.format(plugin.getConfig().getString("server-event-broadcasts.angle-event.start-msg")));
+        plugin.getServer().broadcastMessage(plugin.format(plugin.getConfig().getStringList("server-event-broadcasts.angle-event.start-msg")));
 
         for (Player p : Bukkit.getOnlinePlayers()) {
             p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1));
@@ -93,55 +131,72 @@ public class Events implements Listener {
         plugin.addToTaskId(Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
             @Override
             public void run() {
-                String endMessage = plugin.getConfig().getString("server-event-broadcasts.angel-event.end-msg");
-                plugin.setAngelEvent(false);
-                plugin.getServer().broadcastMessage(plugin.format(endMessage));
-                for (Player p : Bukkit.getOnlinePlayers()) {
-                    p.removePotionEffect(PotionEffectType.SPEED);
-                    p.removePotionEffect(PotionEffectType.FAST_DIGGING);
-                }
+                endAngleEvent();
             }
         }, durationInTicks));
     }
 
-    public void startAcidicWater(Long durationInTicks) {
-        plugin.setAcidicWater(true);
-
-
-        String warningMsg = plugin.getConfig().getString("server-event-broadcasts.acidic-water.warning-msg");
-        plugin.getServer().broadcastMessage(plugin.format(warningMsg));
-
-        Bukkit.getScheduler().runTaskLater(plugin, () -> {
-
-            String startMsg = plugin.getConfig().getString("server-event-broadcasts.acidic-water.start-msg");
-            plugin.getServer().broadcastMessage(plugin.format(startMsg));
-
-            plugin.addToTaskId(Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                @Override
-                public void run() {
-                    String endMessage = plugin.getConfig().getString("server-event-broadcasts.acidic-water.end-msg");
-                    plugin.setAcidicWater(false);
-                    plugin.getServer().broadcastMessage(plugin.format(endMessage));
-                }
-            }, durationInTicks));
-        }, 60L);
-
+    public void endAngleEvent() {
+        List<String> endMessage = plugin.getConfig().getStringList("server-event-broadcasts.angel-event.end-msg");
+        setAngelEvent(false);
+        plugin.getServer().broadcastMessage(plugin.format(endMessage));
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            p.removePotionEffect(PotionEffectType.SPEED);
+            p.removePotionEffect(PotionEffectType.FAST_DIGGING);
+            plugin.setRunningType(null);
+        }
     }
 
-    public void startDoubleMobDamage(Long durationInTicks) {
-        plugin.setDoubleMobDamage(true);
+    public boolean getDoubleOres() {
+        return doubleOres;
+    }
 
-        String startMsg = plugin.getConfig().getString("server-event-broadcasts.double-mob-damage.start-msg");
-        plugin.getServer().broadcastMessage(plugin.format(startMsg));
+    public void setDoubleOres(boolean doubleOres) {
+        this.doubleOres = doubleOres;
+    }
 
-        plugin.addToTaskId(Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-            @Override
-            public void run() {
-                String endMessage = plugin.getConfig().getString("server-event-broadcasts.double-mob-damage.end-msg");
-                plugin.setDoubleMobDamage(false);
-                plugin.getServer().broadcastMessage(plugin.format(endMessage));
-            }
-        }, durationInTicks));
+    public boolean getDoubleXp() {
+        return doubleXp;
+    }
 
+    public void setDoubleXp(boolean doubleXp) {
+        this.doubleXp = doubleXp;
+    }
+
+    public boolean getDoubleMobDrops() {
+        return doubleMobDrops;
+    }
+
+    public void setDoubleMobDrops(boolean doubleMobDrops) {
+        this.doubleMobDrops = doubleMobDrops;
+    }
+
+    public boolean getAngelEvent() {
+        return angelEvent;
+    }
+
+    public void setAngelEvent(boolean angelEvent) {
+        this.angelEvent = angelEvent;
+    }
+
+    public int getCurrentGoodEvent() {
+        return currentGoodEvent;
+    }
+
+    public void setCurrentGoodEvent(int currentGoodEvent) {
+        this.currentGoodEvent = currentGoodEvent;
+    }
+
+    public boolean isInstaKill() {
+        return instaKill;
+    }
+
+    public void setInstaKill(boolean instaKill) {
+        this.instaKill = instaKill;
+    }
+
+    public String getGoodEvent() {
+        int index = getCurrentGoodEvent();
+        return goodEvents[index];
     }
 }

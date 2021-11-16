@@ -9,18 +9,21 @@ import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class DoubleOreEvent extends Events {
+public class DoubleOreEvent implements Listener {
 
-    public DoubleOreEvent(GlobalEvents plugin) {
-        super(plugin);
+    Events events;
+
+    public DoubleOreEvent(Events events) {
+        this.events = events;
     }
 
     @EventHandler
     public void doubleOreEvent(BlockBreakEvent event) {
-        if (!plugin.getDoubleOres()) return;
+        if (!events.getDoubleOres()) return;
         if (event.getPlayer().getGameMode() != GameMode.SURVIVAL) return;
         Location loc = event.getBlock().getLocation();
         Player p = event.getPlayer();
