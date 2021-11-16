@@ -1,6 +1,6 @@
-package me.pray.globalevents.eventlisteners;
+package me.pray.globalevents.EventListeners;
 
-import me.pray.globalevents.customevents.Events;
+import me.pray.globalevents.CustomEvents.Events;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;

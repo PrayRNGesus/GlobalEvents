@@ -1,4 +1,4 @@
-package me.pray.globalevents.commands;
+package me.pray.globalevents.Commands;
 
 import me.pray.globalevents.GlobalEvents;
 import org.bukkit.command.Command;

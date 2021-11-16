@@ -1,6 +1,6 @@
-package me.pray.globalevents.eventlisteners;
+package me.pray.globalevents.EventListeners;
 
-import me.pray.globalevents.customevents.Events;
+import me.pray.globalevents.CustomEvents.Events;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

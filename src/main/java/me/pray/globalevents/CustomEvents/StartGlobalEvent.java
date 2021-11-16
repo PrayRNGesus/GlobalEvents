@@ -1,4 +1,4 @@
-package me.pray.globalevents.customevents;
+package me.pray.globalevents.CustomEvents;
 
 import me.pray.globalevents.GlobalEvents;
 import org.bukkit.Bukkit;

@@ -2,12 +2,12 @@ package me.pray.globalevents;
 
 import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.session.SessionManager;
-import me.pray.globalevents.commands.ReloadConfig;
-import me.pray.globalevents.commands.StartEvents;
-import me.pray.globalevents.commands.StopEvents;
-import me.pray.globalevents.customevents.Events;
-import me.pray.globalevents.customevents.StartGlobalEvent;
-import me.pray.globalevents.eventlisteners.*;
+import me.pray.globalevents.Commands.ReloadConfig;
+import me.pray.globalevents.Commands.StartEvents;
+import me.pray.globalevents.Commands.StopEvents;
+import me.pray.globalevents.CustomEvents.Events;
+import me.pray.globalevents.CustomEvents.StartGlobalEvent;
+import me.pray.globalevents.EventListeners.*;
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;

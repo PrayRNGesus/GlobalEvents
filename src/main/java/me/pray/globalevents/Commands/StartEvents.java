@@ -1,7 +1,7 @@
-package me.pray.globalevents.commands;
+package me.pray.globalevents.Commands;
 
-import me.pray.globalevents.customevents.Events;
-import me.pray.globalevents.customevents.StartGlobalEvent;
+import me.pray.globalevents.CustomEvents.Events;
+import me.pray.globalevents.CustomEvents.StartGlobalEvent;
 import me.pray.globalevents.GlobalEvents;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

@@ -1,8 +1,7 @@
-package me.pray.globalevents.customevents;
+package me.pray.globalevents.CustomEvents;
 
 import me.pray.globalevents.GlobalEvents;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.potion.PotionEffect;
