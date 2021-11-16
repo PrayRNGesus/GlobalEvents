@@ -1,5 +1,6 @@
 package me.pray.globalevents.commands;
 
+import me.pray.globalevents.customevents.Events;
 import me.pray.globalevents.customevents.StartGlobalEvent;
 import me.pray.globalevents.GlobalEvents;
 import org.bukkit.command.Command;
@@ -9,9 +10,11 @@ import org.bukkit.command.CommandSender;
 public class StartEvents implements CommandExecutor {
 
     private GlobalEvents plugin;
+    private Events events;
 
-    public StartEvents(GlobalEvents plugin) {
+    public StartEvents(GlobalEvents plugin, Events events) {
         this.plugin = plugin;
+        this.events = events;
     }
 
     @Override
@@ -23,7 +26,7 @@ public class StartEvents implements CommandExecutor {
                 return true;
             }
 
-            StartGlobalEvent handler = new StartGlobalEvent(plugin);
+            StartGlobalEvent handler = new StartGlobalEvent(plugin, events);
             handler.startGlobalEvents();
             plugin.setRunning(true);
         } else {

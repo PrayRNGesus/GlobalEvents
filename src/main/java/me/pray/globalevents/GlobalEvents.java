@@ -1,5 +1,7 @@
 package me.pray.globalevents;
 
+import com.sk89q.worldguard.WorldGuard;
+import com.sk89q.worldguard.session.SessionManager;
 import me.pray.globalevents.commands.ReloadConfig;
 import me.pray.globalevents.commands.StartEvents;
 import me.pray.globalevents.commands.StopEvents;
@@ -20,6 +22,9 @@ import java.util.List;
 
 public class GlobalEvents extends JavaPlugin {
 
+    //only used for CustomHandler class
+    private static GlobalEvents instance;
+
     private final double version = 1.1;
 
     private final ArrayList<Integer> taskId = new ArrayList<>();
@@ -31,28 +36,34 @@ public class GlobalEvents extends JavaPlugin {
 
     private int mainTask = 0;
 
+    Events events = new Events(this);
+
     @Override
     public void onEnable() {
+        instance = this;
+
         console.sendMessage(format("&5[GlobalEvents] &f- &dBy &6PrayRNGesus &d- started successfully, version: &6" + version));
         createFiles();
 
         initCmdsAndEvents();
 
-        StartGlobalEvent handler = new StartGlobalEvent(this);
+        StartGlobalEvent handler = new StartGlobalEvent(this, events);
         handler.startGlobalEvents();
         setRunning(true);
+
+        SessionManager sessionManager = WorldGuard.getInstance().getPlatform().getSessionManager();
+        sessionManager.registerHandler(CustomHandler.FACTORY, null);
     }
 
     private void initCmdsAndEvents() {
-        Events e = new Events(this);
-        getServer().getPluginManager().registerEvents(e, this);
-        getServer().getPluginManager().registerEvents(new AngelEvent(e), this);
-        getServer().getPluginManager().registerEvents(new DoubleMobDrops(e), this);
-        getServer().getPluginManager().registerEvents(new DoubleOreEvent(e), this);
-        getServer().getPluginManager().registerEvents(new DoubleXp(e), this);
-        getServer().getPluginManager().registerEvents(new InstaKill(e), this);
+        getServer().getPluginManager().registerEvents(events, this);
+        getServer().getPluginManager().registerEvents(new AngelEvent(events), this);
+        getServer().getPluginManager().registerEvents(new DoubleMobDrops(events), this);
+        getServer().getPluginManager().registerEvents(new DoubleOreEvent(events), this);
+        getServer().getPluginManager().registerEvents(new DoubleXp(events), this);
+        getServer().getPluginManager().registerEvents(new InstaKill(events), this);
 
-        getCommand("startevents").setExecutor(new StartEvents(this));
+        getCommand("startevents").setExecutor(new StartEvents(this, events));
         getCommand("stopevents").setExecutor(new StopEvents(this));
         getCommand("globaleventsreload").setExecutor(new ReloadConfig(this));
     }
@@ -62,6 +73,7 @@ public class GlobalEvents extends JavaPlugin {
         return string.replace("&", "§");
     }
 
+    //used for config parsing
     public String format(List<String> string) {
         String s = "";
         for (int i = 0; i < string.size(); i++) {
@@ -127,4 +139,13 @@ public class GlobalEvents extends JavaPlugin {
     public void setRunningType(String runningType) {
         this.runningType = runningType;
     }
+
+    public Events getEvents() {
+        return events;
+    }
+
+    public static GlobalEvents getInstance() {
+        return instance;
+    }
+
 }

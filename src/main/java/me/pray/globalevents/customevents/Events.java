@@ -147,7 +147,7 @@ public class Events implements Listener {
         }
     }
 
-    public boolean getDoubleOres() {
+    public boolean isDoubleOres() {
         return doubleOres;
     }
 
@@ -155,7 +155,7 @@ public class Events implements Listener {
         this.doubleOres = doubleOres;
     }
 
-    public boolean getDoubleXp() {
+    public boolean isDoubleXp() {
         return doubleXp;
     }
 
@@ -163,7 +163,7 @@ public class Events implements Listener {
         this.doubleXp = doubleXp;
     }
 
-    public boolean getDoubleMobDrops() {
+    public boolean isDoubleMobDrops() {
         return doubleMobDrops;
     }
 
@@ -171,7 +171,7 @@ public class Events implements Listener {
         this.doubleMobDrops = doubleMobDrops;
     }
 
-    public boolean getAngelEvent() {
+    public boolean isAngelEvent() {
         return angelEvent;
     }
 

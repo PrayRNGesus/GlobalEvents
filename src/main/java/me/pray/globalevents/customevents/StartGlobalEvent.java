@@ -3,10 +3,14 @@ package me.pray.globalevents.customevents;
 import me.pray.globalevents.GlobalEvents;
 import org.bukkit.Bukkit;
 
-public class StartGlobalEvent extends Events {
+public class StartGlobalEvent  {
 
-    public StartGlobalEvent(GlobalEvents plugin) {
-        super(plugin);
+    GlobalEvents plugin;
+    Events events;
+
+    public StartGlobalEvent(GlobalEvents plugin, Events events) {
+       this.plugin = plugin;
+       this.events = events;
     }
 
     public void startGlobalEvents() {
@@ -28,27 +32,27 @@ public class StartGlobalEvent extends Events {
             @Override
             public void run() {
                 checkCurrentEvent();
-                String goodEventType = getGoodEvent();
+                String goodEventType = events.getGoodEvent();
                 switch (goodEventType.toLowerCase()) {
                     case "double ores":
-                        startDoubleOres(goodEventDuration);
-                        setCurrentGoodEvent(getCurrentGoodEvent() + 1);
+                        events.startDoubleOres(goodEventDuration);
+                        events.setCurrentGoodEvent(events.getCurrentGoodEvent() + 1);
                         break;
                     case "double xp":
-                        startDoubleXp(goodEventDuration);
-                        setCurrentGoodEvent(getCurrentGoodEvent() + 1);
+                        events.startDoubleXp(goodEventDuration);
+                        events.setCurrentGoodEvent(events.getCurrentGoodEvent() + 1);
                         break;
                     case "double mobdrops":
-                        startDoubleMobDrops(goodEventDuration);
-                        setCurrentGoodEvent(getCurrentGoodEvent() + 1);
+                        events.startDoubleMobDrops(goodEventDuration);
+                        events.setCurrentGoodEvent(events.getCurrentGoodEvent() + 1);
                         break;
                     case "insta kill":
-                        startInstaKill(goodEventDuration);
-                        setCurrentGoodEvent(getCurrentGoodEvent() + 1);
+                        events.startInstaKill(goodEventDuration);
+                        events.setCurrentGoodEvent(events.getCurrentGoodEvent() + 1);
                         break;
                     case "angel event":
-                        startAngelEvent(goodEventDuration);
-                        setCurrentGoodEvent(0);
+                        events.startAngelEvent(goodEventDuration);
+                        events.setCurrentGoodEvent(0);
                         break;
                     default:
                         break;

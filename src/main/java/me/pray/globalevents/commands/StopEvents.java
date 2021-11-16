@@ -53,8 +53,6 @@ public class StopEvents implements CommandExecutor {
                         break;
                 }
             }
-
-
             plugin.setRunning(false);
             sender.sendMessage(plugin.format("&cTasks have been ended. "));
         } else {

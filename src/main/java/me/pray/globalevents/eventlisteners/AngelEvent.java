@@ -1,6 +1,5 @@
 package me.pray.globalevents.eventlisteners;
 
-import me.pray.globalevents.GlobalEvents;
 import me.pray.globalevents.customevents.Events;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -23,9 +22,10 @@ public class AngelEvent implements Listener {
 
     @EventHandler
     public void onSpawn(PlayerRespawnEvent event) {
-        if (!events.getAngelEvent()) return;
+        if (!events.isAngelEvent()) return;
         Player player = event.getPlayer();
 
+        //delayed to give time for player to spawn
         Bukkit.getScheduler().runTaskLater(events.plugin, () -> {
             player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1));
             player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, Integer.MAX_VALUE, 1));
@@ -34,7 +34,7 @@ public class AngelEvent implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
-        if (!events.getAngelEvent()) return;
+        if (!events.isAngelEvent()) return;
         Player player = event.getPlayer();
         player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1));
         player.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, Integer.MAX_VALUE, 1));
@@ -42,7 +42,7 @@ public class AngelEvent implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onQuit(PlayerQuitEvent event) {
-        if (!events.getAngelEvent()) return;
+        if (!events.isAngelEvent()) return;
         Player player = event.getPlayer();
 
         if (player.hasPotionEffect(PotionEffectType.SPEED)) {

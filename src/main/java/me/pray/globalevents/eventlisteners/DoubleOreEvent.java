@@ -1,6 +1,5 @@
 package me.pray.globalevents.eventlisteners;
 
-import me.pray.globalevents.GlobalEvents;
 import me.pray.globalevents.customevents.Events;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -23,7 +22,7 @@ public class DoubleOreEvent implements Listener {
 
     @EventHandler
     public void doubleOreEvent(BlockBreakEvent event) {
-        if (!events.getDoubleOres()) return;
+        if (!events.isDoubleOres()) return;
         if (event.getPlayer().getGameMode() != GameMode.SURVIVAL) return;
         Location loc = event.getBlock().getLocation();
         Player p = event.getPlayer();

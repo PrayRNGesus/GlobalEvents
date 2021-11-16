@@ -1,6 +1,5 @@
 package me.pray.globalevents.eventlisteners;
 
-import me.pray.globalevents.GlobalEvents;
 import me.pray.globalevents.customevents.Events;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -16,7 +15,7 @@ public class DoubleXp implements Listener {
 
     @EventHandler
     public void doubleXpEvent(PlayerExpChangeEvent event) {
-        if(!events.getDoubleXp()) return;
+        if(!events.isDoubleXp()) return;
         int newXp = (event.getAmount() * 2);
         event.setAmount(newXp);
     }
